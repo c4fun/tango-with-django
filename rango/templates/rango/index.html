@@ -15,5 +15,17 @@
     {% else %}
         <strong>There are no categories to present.</strong>
     {% endif %}
+
+    {% if pages %}
+        <h2>Top 5 pages:</h2>
+        <ul>
+            {% for page in pages %}
+                <li>Views: {{ page.views }} <a href="{{ page.url }}">{{ page.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no pages to present.</strong>
+    {% endif %}
+
 </body>
 </html>

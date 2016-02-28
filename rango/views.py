@@ -10,6 +10,10 @@ def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
     context_dict = {'categories': category_list}
 
+    # Add the Top 5 most viewed pages
+    pages = Page.objects.order_by('-views')[:5]
+    context_dict['pages'] = pages
+
     # Render the response and send it back
     return render(request, 'rango/index.html', context_dict)
 
