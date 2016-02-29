@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Category, Page
 from .forms import CategoryForm, PageForm
 
@@ -40,6 +40,12 @@ def category(request, category_name_slug):
     # We'll use this in the template to verify that the category exists.
     context_dict['category'] = category
 
+    # Insert the category_name_slug into the dictionary so that it can be used
+    # in the add_page
+    # 这里必须是category_name_slug的方式，而不是category_name。因为slug还需要传给add_page.html继续使用，
+    # 如果用category_name, 传入的category_name可能产生另外的slug
+    context_dict['category_name_slug'] = category_name_slug
+
     return render(request, 'rango/category.html', context_dict)
 
 
@@ -65,3 +71,29 @@ def add_category(request):
         form = CategoryForm()
 
     return render(request, 'rango/add_category.html', {'form': form})
+
+def add_page(request, category_name_slug):
+
+    try:
+        cat = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        cat = None
+
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            if cat:
+                page = form.save(commit=False)
+                page.category = cat
+                page.views = 0
+                page.save()
+                # TODO BUG: 这里必须redirect，否则再次创建有问题
+                return HttpResponseRedirect('/rango/index')
+        else:
+            print(form.errors)
+    else:
+        form = PageForm()
+
+    context_dict = {'form': form, 'category': cat}
+
+    return render(request, 'rango/add_page.html', context_dict)
