@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Form template</title>
+</head>
+<body>
+    <!-- pure html template-->
+    <form action="/your-name/" method="post">
+        <label for="your_name">Your name: </label>
+        <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+        <input type="submit" value="OK">
+    </form>
+
+    <!-- django form-related template -->
+    <form action="/your-name/" method="post">
+        {% csrf_token %}
+        {{ form }}
+    </form>
+</body>
+</html>

@@ -25,7 +25,7 @@ class Category(models.Model):
 class Page(models.Model):
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=200)
-    url = models.URLField(default="")
+    url = models.URLField(default="", max_length=200)
     views = models.IntegerField(default=0)
 
     def __str__(self):
