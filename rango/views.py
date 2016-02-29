@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Category, Page
 from .forms import CategoryForm, PageForm
@@ -87,8 +87,8 @@ def add_page(request, category_name_slug):
                 page.category = cat
                 page.views = 0
                 page.save()
-                # TODO BUG: 这里必须redirect，否则再次创建有问题
-                return HttpResponseRedirect('/rango/index')
+                # DONE BUG: 这里必须redirect，否则再次创建有问题
+                return redirect('rango.views.index')
         else:
             print(form.errors)
     else:
