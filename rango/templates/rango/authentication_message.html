@@ -1,0 +1,9 @@
+{% extends 'rango/index.html' %}
+<!--TODO 如果我使用这个来extends index，相应的判断并不会显示，应该是user没有传递过来-->
+{% block authentication_message %}
+    {% if user.is_authenticated %}
+    <h1>Rango says... hello {{ user.username }}!</h1>
+    {% else %}
+    <h1>Rango says... hello world!</h1>
+    {% endif %}
+{% endblock %}

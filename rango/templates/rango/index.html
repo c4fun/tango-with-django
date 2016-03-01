@@ -5,8 +5,14 @@
     <title>Rango</title>
 </head>
 <body>
-    <h1>Rango Says Hi</h1>
+    <h1><a href="/rango/index" >Rango</a></h1>
+    {% if user.is_authenticated %}
+    <h1>Rango says... hello {{ user.username }}!</h1>
+    {% else %}
+    <h1>Rango says... hello world!</h1>
+    {% endif %}
     <a href="/rango/register">Register Here</a>
+    <a href="/rango/login/">Login</a>
 
     {% if categories %}
         <ul>
