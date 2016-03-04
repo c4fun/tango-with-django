@@ -122,3 +122,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Login things
+# done BUG: This webpage has a redirect loop. 需要使用正确的地址
+LOGIN_URL = '/rango/login/'

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Rango</title>
 </head>
-<body>
+<br>
     <h1><a href="/rango/index" >Rango</a></h1>
     {% if user.is_authenticated %}
-    <h1>Rango says... hello {{ user.username }}!</h1>
+        <h1>Rango says... hello {{ user.username }}!</h1><br />
+        <h2><a href="/rango/logout">Logout</a> </h2><br/>
     {% else %}
-    <h1>Rango says... hello world!</h1>
+        <h1><a href="/rango/register">Register Here</a></h1>
+        <h2><a href="/rango/login/">Login</a><br/></h2>
     {% endif %}
-    <a href="/rango/register">Register Here</a>
-    <a href="/rango/login/">Login</a>
+
 
     {% if categories %}
         <ul>
@@ -23,7 +24,8 @@
     {% else %}
         <strong>There are no categories to present.</strong>
     {% endif %}
-    <a href="/rango/add_category/">Add a New Category</a><br />
+    {% if user.is_authenticated %}
+        <a href="/rango/add_category/">Add a New Category</a><br />
 
     {% if pages %}
         <h2>Top 5 pages:</h2>
@@ -35,6 +37,9 @@
     {% else %}
         <strong>There are no pages to present.</strong>
     {% endif %}
+
+    <h1><a href="/rango/about">About</a></h1>
+
 
 </body>
 </html>
