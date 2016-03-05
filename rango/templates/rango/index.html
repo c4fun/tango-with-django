@@ -1,25 +1,18 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Rango</title>
-</head>
-<br>
-    <h1><a href="/rango/index" >Rango</a></h1>
-    {% if user.is_authenticated %}
-        <h1>Rango says... hello {{ user.username }}!</h1><br />
-        <h2><a href="/rango/logout">Logout</a> </h2><br/>
-        <a href="/rango/add_category/">Add a New Category</a><br />
-    {% else %}
-        <h1><a href="/rango/register">Register Here</a></h1>
-        <h2><a href="/rango/login/">Login</a><br/></h2>
-    {% endif %}
+{% load staticfiles %}
+
+{% block title %}Index of Rango{% endblock %}
+
+{% block body_block %}
+
+    <h1><a href="{% url 'rango:index' %}" >Rango Index</a></h1>
 
 
     {% if categories %}
         <ul>
             {% for category in categories %}
-            <li><a href="/rango/category/{{ category.slug }}/">{{ category.name }}</a></li>
+            <li><a href="{% url 'rango:category' category.slug %}">{{ category.name }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
@@ -37,5 +30,4 @@
         <strong>There are no pages to present.</strong>
     {% endif %}
 
-    <h1><a href="/rango/about">About</a></h1>
-
+{% endblock %}

@@ -92,7 +92,8 @@ def add_page(request, category_name_slug):
                 page.views = 0
                 page.save()
                 # DONE BUG: 这里必须redirect，否则再次创建有问题
-                return redirect('rango.views.index')
+                # return redirect('rango.views.index')
+                return redirect('/rango/index/')
         else:
             print(form.errors)
     else:
@@ -150,7 +151,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/rango/')
+                return HttpResponseRedirect('/rango/index/')
             else:
                 return HttpResponse("You Rango account is disabled.")
         else:
@@ -169,4 +170,4 @@ def user_logout(request):
     # Since we have checked the customer has already logged in the decorator
     logout(request)
 
-    return HttpResponseRedirect('/rango/')
+    return HttpResponseRedirect('/rango/index/')

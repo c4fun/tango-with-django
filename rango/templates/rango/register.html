@@ -9,7 +9,7 @@
 
     {% if registered %}
         <p>Rango says: <strong>Thank you for registering!</strong></p>
-        <a href="/rango/">Return to the homepage.</a>
+        <a href="{% url 'rango:index' %}">Return to the homepage.</a>
     {% else %}
         <p>Rango says:<strong>register here!</strong></p>
         <form id="user_form" method="post" enctype="multipart/form-data">
