@@ -5,29 +5,56 @@
 {% block title %}Index of Rango{% endblock %}
 
 {% block body_block %}
+    <div class="page-header">
+        <h1><a href="{% url 'rango:index' %}" >Rango Index</a></h1>
+    </div>
+{% if user.is_authenticated %}
+    <div>
+        <h2>Hello {{user.username}}</h2>
+        {% else %}
+        <h2>Hello world!</h2>
+        {% endif %}
+        <p>visit times: {{ visits }} </p>
+    </div>
 
-    <h1><a href="{% url 'rango:index' %}" >Rango Index</a></h1>
-    <p>visit times: {{ visits }} </p>
+    <div class="row placeholders">
+        <div class="col-xs-12 col-sm-6 placeholder">
 
-    {% if categories %}
-        <ul>
-            {% for category in categories %}
-            <li><a href="{% url 'rango:category' category.slug %}">{{ category.name }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no categories to present.</strong>
-    {% endif %}
-
-    {% if pages %}
-        <h2>Top 5 pages:</h2>
-        <ul>
-            {% for page in pages %}
-                <li>Views: {{ page.views }} <a href="{{ page.url }}">{{ page.title }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no pages to present.</strong>
-    {% endif %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Categories</h3>
+                </div>
+            </div>
+            {% if categories %}
+                <ul class="list-group">
+                    {% for category in categories %}
+                    <li class="list-group-item"><a href="{% url 'rango:category' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no categories to present.</strong>
+            {% endif %}
+        </div>
+        <div class="col-xs-12 col-sm-6 placeholder">
+            {% if pages %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Top 5 Pages</h3>
+                    </div>
+                </div>
+                <!--<h4>Top 5 pages:</h4>-->
+                <ul class="list-group">
+                    {% for page in pages %}
+                        <li class="list-group-item">
+                            <a href="{{ page.url }}">{{ page.title }}</a>
+                            <span class="badge">Views: {{ page.views }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no pages to present.</strong>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

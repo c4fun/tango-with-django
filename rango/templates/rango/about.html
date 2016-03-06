@@ -3,8 +3,13 @@
 {% load staticfiles %}
 
 {% block body_block %}
-
-    <h1>Rango says here is the about page. Duh!<br/></h1>
+  <div class="page-header">
+      <h1>Rango says here is the about page. Duh!<br/></h1>
+  </div>
     <p>visit times: {{ visits }} </p>
+  <div>
+      <img width="640" height="480" src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+      <br/>
+  </div>
 
 {% endblock %}
