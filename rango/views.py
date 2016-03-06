@@ -39,7 +39,7 @@ def index(request):
         request.session['last_visit'] = str(datetime.now())
         request.session['visits'] = visits
 
-    context_dict['visit'] = visits
+    context_dict['visits'] = visits
 
     # Render the response and send it back
     response = render(request, 'rango/index.html', context_dict)
@@ -77,8 +77,12 @@ def category(request, category_name_slug):
 
 
 def about(request):
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
 
-    return render(request, 'rango/about.html', {})
+    return render(request, 'rango/about.html', {'visits': count})
 
 @login_required
 def add_category(request):
