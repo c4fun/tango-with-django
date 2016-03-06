@@ -16,9 +16,10 @@
         <ul>
             <li><a href="{% url 'rango:index' %}" >Rango Index</a></li>
             {% if user.is_authenticated %}
+            <li><a href="{% url 'rango:add_category' %}">Add a new catogory</a></li>
             <li><a href="{% url 'rango:restricted' %}">Restricted Page</a> </li>
             <li><a href="{% url 'auth_logout' %}?next={% url 'rango:index' %}">Logout</a> </li>
-            <li><a href="{% url 'rango:add_category' %}">Add a new catogory</a></li>
+            <li><a href="{% url 'auth_password_change' %}">Change Password</a> </li>
             {% else %}
             <li><a href="{% url 'registration_register' %}">Register Here</a></li>
             <li><a href="{% url 'auth_login' %}">Login</a><br/></li>
