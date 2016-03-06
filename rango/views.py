@@ -28,7 +28,7 @@ def index(request):
     if last_visit:
         last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
 
-        if (datetime.now() -last_visit_time).seconds > 5:
+        if (datetime.now() -last_visit_time).seconds > 86400:
             visits += 1
             reset_last_visit_time = True
 

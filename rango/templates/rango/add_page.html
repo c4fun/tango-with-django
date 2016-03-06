@@ -4,9 +4,10 @@
 
 {% block body_block %}
 
-    <h1>Add a Page in Category: {{ category }}</h1>
-
-    <form id="page_form" method="post">
+    <form id="page_form" id="page_form" method="post">
+        <h2 class="form-signin-heading">
+            Add a Page to {{category.name}}
+        </h2>
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
             {{ hidden }}
@@ -18,7 +19,8 @@
             {{ field }}
             <br/>
         {% endfor %}
-        <input type="submit" name="submit" value="Create Page" />
+        <button class="btn btn-primary" type="submit" name="submit">Add Page</button>
+        <!--<input type="submit" name="submit" value="Create Page" />-->
     </form>
 
 {% endblock %}
