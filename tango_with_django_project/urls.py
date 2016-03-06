@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from registration.backends.simple import urls as registration_url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rango/', include('rango.urls', namespace='rango')),
+    url(r'^accounts/', include(registration_url)),
 ]

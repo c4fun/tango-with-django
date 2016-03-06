@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rango',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -124,6 +125,14 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# Django-registration-redux config
+REGISTRATION_OPEN = True        # If True, users can register
+ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
+
 # Login things
 # done BUG: This webpage has a redirect loop. 需要使用正确的地址
-LOGIN_URL = '/rango/login/'
+# LOGIN_URL = '/rango/login/'
+
