@@ -6,6 +6,7 @@ from .models import Category, Page
 from .forms import CategoryForm, PageForm
 from .forms import UserForm, UserProfileForm
 from datetime import datetime
+from .bing_search import run_query
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -200,3 +201,14 @@ def restricted(request):
 #     logout(request)
 #
 #     return HttpResponseRedirect('/rango/index/')
+
+def search(request):
+
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', {'result_list':result_list})
