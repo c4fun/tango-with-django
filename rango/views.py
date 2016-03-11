@@ -50,7 +50,16 @@ def index(request):
 def category(request, category_name_slug):
     # Create a context dictionary which we can pass to the template rendering machine.
     context_dict = {}
+    context_dict['result_list'] = None
+    context_dict['query'] = None
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
 
+        if query:
+            result_list = run_query(query)
+
+            context_dict['result_list'] = result_list
+            context_dict['query'] = query
     # Can we find a category name slug with the given category_name_slug?
     # If YES, the .get() method will return a model instance
     # If NOT, the .get() method will return a DoesNotExist exception
@@ -60,7 +69,6 @@ def category(request, category_name_slug):
 
     # Increment the category's views property
     category.views += 1
-    # Need to save the category everytime it incremented
     category.save()
 
     # Retrieve all of the associated pages.
