@@ -87,6 +87,9 @@ def category(request, category_name_slug):
     # 如果用category_name, 传入的category_name可能产生另外的slug
     context_dict['category_name_slug'] = category_name_slug
 
+    if not context_dict['query']:
+        context_dict['query'] = category.name
+
     return render(request, 'rango/category.html', context_dict)
 
 
