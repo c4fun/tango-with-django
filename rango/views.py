@@ -29,7 +29,7 @@ def index(request):
     if last_visit:
         last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
 
-        if (datetime.now() -last_visit_time).seconds > 86400:
+        if (datetime.now() -last_visit_time).seconds > 5:
             visits += 1
             reset_last_visit_time = True
 
@@ -58,9 +58,14 @@ def category(request, category_name_slug):
     category = get_object_or_404(Category, slug=category_name_slug)
     context_dict['category_name'] = category.name
 
+    # Increment the category's views property
+    category.views += 1
+    # Need to save the category everytime it incremented
+    category.save()
+
     # Retrieve all of the associated pages.
     # Note that filter returns >= 1 model instance.
-    pages = Page.objects.filter(category=category)
+    pages = Page.objects.filter(category=category).order_by('-views')
 
     # Adds our results list to the template context under name pages.
     context_dict['pages'] = pages
@@ -212,3 +217,20 @@ def search(request):
             result_list = run_query(query)
 
     return render(request, 'rango/search.html', {'result_list':result_list})
+
+
+def track_url(request):
+    page_id = None
+    url = '/rango/'
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+            try:
+                page = Page.objects.get(id=page_id)
+                page.views += 1
+                page.save()
+                url = page.url
+            except:
+                pass
+
+    return redirect(url)
