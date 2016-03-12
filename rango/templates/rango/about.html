@@ -3,13 +3,23 @@
 {% load staticfiles %}
 
 {% block body_block %}
-  <div class="page-header">
-      <h1>Rango says here is the about page. Duh!<br/></h1>
-  </div>
+    <div class="page-header">
+        <h1>Rango says here is the about page. Duh!<br/></h1>
+    </div>
     <p>visit times: {{ visits }} </p>
-  <div>
-      <img width="640" height="480" src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
-      <br/>
-  </div>
+    <div>
+        <img width="640" height="480" src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+        <br/>
+    </div>
+    <button onclick="alert('You clicked the button using Javascript.');">
+        Click Me - I run Javascript
+    </button>
+
+    <button id="about-btn">Click Me - I'm Jquery</button>
+    <p>This is an example</p>
+    <p>This is another example</p>
+    <div id="msg">
+        I am the message to be shown.
+    </div>
 
 {% endblock %}
