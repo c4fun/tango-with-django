@@ -14,32 +14,35 @@
         {% endif %}
         <p>
             <strong id="like_count">{{category.likes}}</strong> people like this category
+            <!-- Customer likes or don't like this category -->
             {% if user.is_authenticated %}
-            <button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-                Like
-            </button>
-            <button id="dislikes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-                <span class="glyphicon glyphicon-thumbs-down"></span>
-                Dislike
-            </button>
+                <button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    Like
+                </button>
+                <button id="dislikes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                    Dislike
+                </button>
             {% endif %}
         </p>
-        {% if pages %}
-            <!--TODO: make this as bootstrap list group-->
-            <ul>
-                {% for page in pages %}
-                    <li><a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a></li>
-                {% if page.views > 1 %}
-                    ({{page.views}} Views)
-                {% elif page.views == 1 %}
-                    ({{page.views}} View)
-                {% endif %}
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>No pages currently in category.</strong><br/>
-        {% endif %}
+        <div id="page_list">
+            {% if pages %}
+                <!--TODO: make this as bootstrap list group-->
+                <ul>
+                    {% for page in pages %}
+                        <li><a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a></li>
+                    {% if page.views > 1 %}
+                        ({{page.views}} Views)
+                    {% elif page.views == 1 %}
+                        ({{page.views}} View)
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong><br/>
+            {% endif %}
+        </div>
     {% else %}
         <strong>The specified category {{ category_name }} does not exist!</strong>
     {% endif %}
