@@ -7,6 +7,7 @@ from .forms import CategoryForm, PageForm
 from .forms import UserForm, UserProfileForm
 from datetime import datetime
 from .bing_search import run_query
+from .helper import get_category_list
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -273,8 +274,19 @@ def dislike_category(request):
     if cat_id:
         cat = Category.objects.get(id=int(cat_id))
         if cat:
-            likes = cat.likes -1
+            likes = cat.likes - 1
             cat.likes = likes
             cat.save()
 
     return HttpResponse(likes)
+
+def suggest_category(request):
+
+    cat_list = []
+    starts_with = ''
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+
+    cat_list = get_category_list(8, starts_with)
+
+    return render(request, 'rango/cats.html', {'cat_list': cat_list})

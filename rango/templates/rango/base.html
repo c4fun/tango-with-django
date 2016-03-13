@@ -67,17 +67,32 @@
       </div>
     </div>
 
+
     <div class="container-fluid">
         <div class="row">
+            <!-- This is the category container on the left -->
             <div class="col-sm-3 col-md-2 sidebar">
-                {% block side_block %}
-                {% get_category_list category %}
-                {% endblock %}
+                <div id="cats">
+                    {% block side_block %}
+                    {% get_category_list category %}
+                    {% endblock %}
+                </div>
+                <ul class="nav nav-list">
+                    <li class="nav-header">Find a Category</li>
+                    <form>
+                        <label></label>
+                        <li><input class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
+                    </form>
+                </ul>
+
+
             </div>
+
+            <!-- This is the main container on the right -->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <div>
-                        {% block body_block %}How to Tango with Django{% endblock %}
-                    </div>
+                <div>
+                    {% block body_block %}How to Tango with Django{% endblock %}
+                </div>
             </div>
         </div>
     </div>

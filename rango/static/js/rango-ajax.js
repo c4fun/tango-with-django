@@ -17,4 +17,14 @@ $(document).ready(function(){
             $('#dislikes').hide()
         });
     });
+
+    // To update the category list according to input
+    $('#suggestion').keyup(function(){
+        var query;
+        query = $(this).val();
+        $.get('/rango/suggest_category/', {suggestion: query},
+        function(data){
+            $('#cats').html(data);
+        });
+    });
 });
