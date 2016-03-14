@@ -15,6 +15,8 @@ class Category(models.Model):
         #if self.id is None:
                 #self.slug = slugify(self.name)
         self.slug = slugify(self.name)
+        if self.views < 0:
+            self.views = 0
         super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
