@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.utils import timezone
+from datetime import timedelta
 
-from rango.models import Category
+from rango.models import Category, Page
 
 class CategoryMethodTests(TestCase):
 
@@ -53,6 +55,18 @@ class IndexViewTests(TestCase):
         self.assertEqual(num_cats, 4)
 
 
+class PageMethodTests(TestCase):
+
+    def test_visit_not_in_the_future(self):
+        """
+        visit_not_in_the_future should return False if last_visit or first_visit of Page is in future.
+        """
+        cat = add_cat('test_cat', 1, 1)
+        page = add_page(cat, "test_page", "http://example.com", 0)
+        self.assertEqual(page.first_visit < timezone.now(), True)
+        self.assertEqual(page.last_visit < timezone.now(), True)
+
+
 
 def add_cat(name, views, likes):
     c = Category.objects.get_or_create(name=name)[0]
@@ -60,3 +74,12 @@ def add_cat(name, views, likes):
     c.likes = likes
     c.save()
     return c
+
+def add_page(cat, title, url, views):
+    page = Page.objects.create(title=title,
+                               category=cat,
+                               url=url,
+                               views=views,
+                               first_visit=timezone.now()+timedelta(days=30),
+                               last_visit=timezone.now()+timedelta(days=30))
+    return page
