@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from .models import Category, Page
 from .forms import CategoryForm, PageForm
 from .forms import UserForm, UserProfileForm
 from datetime import datetime
+from django.utils import timezone
 from .bing_search import run_query
 from .helper import get_category_list
 
@@ -137,6 +139,8 @@ def add_page(request, category_name_slug):
                 page = form.save(commit=False)
                 page.category = cat
                 page.views = 0
+                page.first_visit = timezone.now()
+                page.last_visit = timezone.now()
                 page.save()
                 # DONE BUG: 这里必须redirect，否则再次创建有问题
                 # return redirect('rango.views.index')
@@ -240,6 +244,7 @@ def track_url(request):
             try:
                 page = Page.objects.get(id=page_id)
                 page.views += 1
+                page.last_visit = timezone.now()
                 page.save()
                 url = page.url
             except:

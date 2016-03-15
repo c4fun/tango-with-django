@@ -3,6 +3,7 @@ from django import forms
 from .models import Category, Page
 from .models import UserProfile
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Plase input the category name...")
@@ -21,6 +22,8 @@ class PageForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the title of this page...")
     url = forms.URLField(max_length=200, help_text="Please enter the URL of this page...")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    first_visit = forms.DateTimeField(widget=forms.HiddenInput(), required=False, help_text="First Visit Time")
+    last_visit = forms.DateTimeField(widget=forms.HiddenInput(), required=False, help_text="Last Visit Time")
 
     class Meta:
         # Provide an association between the ModelForm and a model

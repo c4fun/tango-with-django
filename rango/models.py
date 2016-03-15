@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -28,10 +29,12 @@ class Category(models.Model):
 
 
 class Page(models.Model):
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     url = models.URLField(default="", max_length=200)
     views = models.IntegerField(default=0)
+    first_visit = models.DateTimeField(default=timezone.now)
+    last_visit = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
